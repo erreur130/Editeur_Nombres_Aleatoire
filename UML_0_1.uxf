@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>744</x>
+      <y>108</y>
+      <w>276</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>MainWindow
+--
+--
++ afficherStats()
++ afficherListeMethodes()
++ afficherBruit()
++ spinBox_on_resolutionBruit_valueChanged(value : int)
+ /*+ drag et drop*/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>402</x>
+      <y>114</y>
+      <w>228</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Editeur de Générateur à 
+Nombres aléatoire&gt;&gt;
+EGNA
+--
+- graine : uint64_t
+- etat[2] : uint64_t
+--
++ EGNA(QVector&lt;Module*&gt; *)
++ ~EGNA()
++ charger(fichier : QString)
++ sauvegarder(fichier : QString)
++ renitialiserEtat()
++ changerGraine(graine_ : uint64_t)
+
++ suivantPixelBruit() : unsigned char
++ calculeMoyenne(nbTirages : int) : double
++ calculeVariance(nbTirages : int) : double
++ calculeEcartType(nbTirages : int) : double
++ calculeMediane(nbTirages : int) : double
++ calculeUniformite(nbTirages : int) : double
++ calculeAutocorrelation(nbTirages : int) : double
++ calculeEquilibreBits(nbTirages : int) : double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>126</y>
+      <w>132</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+- editeur : EGNA
+m1=1..1
+m2=0..1</panel_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>78</x>
+      <y>120</y>
+      <w>222</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Générateur à 
+Nombres aléatoire&gt;&gt;
+GNA
+--
+- graine : uint64_t
+- etat[2] : uint64_t
+- bloquerLEtat : bool
+--
++ GNA()
++ GNA(graine_ : uint64_t)
++ ~GNA()
+- etatSuivant()
++ fixerGraine(graine_ : uint64_t)
++ regenererGraine()
++ graineActuelle() : uint64_t
+
++ alea&lt;T&gt;(max : T) : T
++ alea&lt;T&gt;(min, max : T) : T
++ aleaBool() : bool
++ choisirDans&lt;T&gt;(conteneur : QVector&lt;T&gt;&amp;) : T
++ melanger&lt;T&gt;(conteneur : QVector&lt;T&gt;&amp;)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>528</x>
+      <y>12</y>
+      <w>84</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>charger() charge
+un fichier config
+lié au GNA
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>72</x>
+      <y>36</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>"GNA" par défaut,
+sinon ça peut être
+n'importe quel nom
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>294</x>
+      <y>216</y>
+      <w>120</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..
+Créé la Classe</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>108</x>
+      <y>66</y>
+      <w>18</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>192</x>
+      <y>30</y>
+      <w>90</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>contient forcément
+des types
+numériques
+sinon message
+d'erreur
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>228</x>
+      <y>84</y>
+      <w>18</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>564</x>
+      <y>48</y>
+      <w>18</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>300</y>
+      <w>240</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Module
+--
+--
++ Module()
++ ~Module()
+/*+ etatSuivant(etat[2] : uint64_t) : uint64_t*/
+/*+ copie() : Module**/
+/*+ creerPanneauParametres() : QWidget**/
+/*+ creerBulleInfo() : QWidget**/
+/*+ sauvegarder(os : std::ostream)*/
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>846</x>
+      <y>240</y>
+      <w>198</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+- modulesActif : QVector&lt;Module*&gt; *
+- modulesParDefaut : QVector&lt;Module*&gt; *
+m1=1..1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>300</y>
+      <w>198</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+- modules : QVector&lt;Module*&gt; *
+m1=1..1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;20.0;310.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>738</x>
+      <y>72</y>
+      <w>108</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>+ afficherStats utilise
+nbTirages = resolution²
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>762</x>
+      <y>96</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>642</x>
+      <y>210</y>
+      <w>66</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>QObject
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>702</x>
+      <y>204</y>
+      <w>54</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>70.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>222</y>
+      <w>174</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>270.0;130.0;270.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>408</x>
+      <y>18</y>
+      <w>108</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>Pour ne pas à corréler
+des chiffres trop grand,
+j'ai fait en sorte que
+dans ces cas là on parle
+en pourcentage
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>462</x>
+      <y>66</y>
+      <w>18</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>84</x>
+      <y>456</y>
+      <w>222</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>RotationBits
+--
+- decalage : unsigned char
+--
++ RotationBits()
++ ~RotationBits()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerDecalage(decalage_ : unsigned char)
++ avoirDecalage() : unsigned char</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>660</x>
+      <y>654</y>
+      <w>222</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>MultiplisationConstante
+--
+- constante : uint64_t
+--
++ AdditionConstante()
++ ~AdditionConstante()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerConstante(constante_ : uint64_t)
++ avoirConstante() : uint64_t</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>348</x>
+      <y>456</y>
+      <w>222</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Xorshift
+--
+- a, b, c : unsigned char
+--
++ Xorshift()
++ ~Xorshift()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerA(a_ : unsigned char)
++ changerB(b_ : unsigned char)
++ changerC(c_ : unsigned char)
++ avoirA() : unsigned char
++ avoirB() : unsigned char
++ avoirC() : unsigned char</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>654</y>
+      <w>222</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>PCG
+--
+- mult, incr, mod : uint64_t
+- permu : int
+--
++ PCG()
++ ~PCG()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerMult(mult_ : uint64_t)
++ changerIncr(incr_ : uint64_t)
++ changerMod(mod_ : uint64_t)
++ avoirMult() : uint64_t
++ avoirIncr() : uint64_t
++ avoirMod() : uint64_t</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>348</x>
+      <y>648</y>
+      <w>222</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>SplitMix64
+--
+- a, b : uint64_t
+--
++ SplitMix64()
++ ~SplitMix64()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerA(a_ : uint64_t)
++ changerB(b_ : uint64_t)
++ avoirA() : uint64_t
++ avoirB() : uint64_t</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>456</y>
+      <w>222</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>LCG
+--
+- mult, incr, mod : uint64_t
+--
++ LCG()
++ ~LCG()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerMult(mult_ : uint64_t)
++ changerIncr(incr_ : uint64_t)
++ changerMod(mod_ : uint64_t)
++ avoirMult() : uint64_t
++ avoirIncr() : uint64_t
++ avoirMod() : uint64_t</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>660</x>
+      <y>462</y>
+      <w>222</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>AdditionConstante
+--
+- constante : uint64_t
+--
++ AdditionConstante()
++ ~AdditionConstante()
+/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ copie() : MethodeDeCalcule*/
+/+ creerPanneauParametres() : QWidget*/
+/+ creerBulleInfo() : QWidget*/
+/+ sauvegarder(os : std::ostream) : std::ostream/
++ changerConstante(constante_ : uint64_t)
++ avoirConstante() : uint64_t</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1212</x>
+      <y>690</y>
+      <w>150</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>permu : int
+ne peut pas être définit au début,
+il est calculer
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1176</x>
+      <y>696</y>
+      <w>48</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>96</x>
+      <y>684</y>
+      <w>138</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>les fonctions des spin box
+sont crée via des lambda
+pour les Classe fille de Module
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1026</x>
+      <y>390</y>
+      <w>18</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>942</x>
+      <y>390</y>
+      <w>30</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;460.0;30.0;460.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>876</x>
+      <y>390</y>
+      <w>48</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;60.0;460.0;10.0;460.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>558</x>
+      <y>390</y>
+      <w>276</w>
+      <h>324</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>440.0;10.0;440.0;80.0;70.0;80.0;70.0;520.0;10.0;520.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>390</y>
+      <w>18</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>516</x>
+      <y>390</y>
+      <w>306</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>490.0;10.0;10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>372</y>
+      <w>552</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>900.0;10.0;10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+</diagram>
