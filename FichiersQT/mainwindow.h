@@ -12,12 +12,13 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow{
     Q_OBJECT
-    EGNA editeur;
-    QVector<Module*> modulesActif;
+    QVector<Module*> *modulesActif;
     QVector<Module*> modulesParDefaut;
+    EGNA editeur;
 
-    void afficherStats();
-    void afficherListeMethodes();
+    void afficherStats() const;
+    void afficherListeModules() const;
+    void miseAJourMethonesActives() const;
     void afficherBruit();
     //void spinBox_on_resolutionBruit_valueChanged(int value);
 

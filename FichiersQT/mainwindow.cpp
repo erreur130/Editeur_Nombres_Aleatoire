@@ -3,12 +3,27 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+    , modulesActif(new QVector<Module*>), modulesParDefaut(QVector<Module*>()), editeur(EGNA(modulesActif)), ui(new Ui::MainWindow){
     ui->setupUi(this);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow(){
     delete ui;
 }
+
+void MainWindow::afficherStats() const {
+
+}
+
+void MainWindow::afficherListeModules() const {
+
+}
+
+void MainWindow::miseAJourMethonesActives() const {
+
+}
+
+void MainWindow::afficherBruit(){
+
+}
+

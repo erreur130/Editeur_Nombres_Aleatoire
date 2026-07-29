@@ -1,3 +1,10 @@
 #include "module.h"
 
-Module::Module() {}
+Module::Module(QObject* parent)
+    :QObject(parent){
+
+}
+
+Module::~Module(){
+
+}

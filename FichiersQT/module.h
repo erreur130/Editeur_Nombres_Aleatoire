@@ -5,7 +5,7 @@
 
 class Module : public QObject {
     public:
-        Module();
+        explicit Module(QObject* parent);
         ~Module();
         virtual uint64_t etatSuivant(uint64_t etat[2]) const = 0;
         virtual Module* copie() const = 0;

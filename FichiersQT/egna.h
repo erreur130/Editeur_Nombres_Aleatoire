@@ -6,24 +6,24 @@
 class EGNA{
     uint64_t graine;
     uint64_t etat[2];
-    QVector<Module*> modules;
+    QVector<Module*> *modules;
 public:
-    EGNA();
+    EGNA(QVector<Module*>*);
     ~EGNA();
 
     void charger(QString fichier);
-    void sauvegarder(QString fichier);
+    void sauvegarder(QString fichier) const;
     void renitialiserEtat();
     inline void changerGraine(uint64_t graine_){graine = graine_;};
 
     unsigned char suivantPixelBruit();
-    double calculeMoyenne(int nbTirages);
-    double calculeVariance(int nbTirages);
-    double calculeEcartType(int nbTirages);
-    double calculeMediane(int nbTirages);
-    double calculeUniformite(int nbTirages);
-    double calculeAutocorrelation(int nbTirages);
-    double calculeEquilibreBits(int nbTirages);
+    double calculeMoyenne(int nbTirages) const;
+    double calculeVariance(int nbTirages) const;
+    double calculeEcartType(int nbTirages) const;
+    double calculeMediane(int nbTirages) const;
+    double calculeUniformite(int nbTirages) const;
+    double calculeAutocorrelation(int nbTirages) const;
+    double calculeEquilibreBits(int nbTirages) const;
 };
 
 #endif // EGNA_H
