@@ -28,11 +28,7 @@ double EGNA::calculeMoyenne(int nbTirages) const {
 
 }
 
-double EGNA::calculeVariance(int nbTirages) const {
-
-}
-
-double EGNA::calculeEcartType(int nbTirages) const {
+double EGNA::calculeCV(int nbTirages) const {
 
 }
 

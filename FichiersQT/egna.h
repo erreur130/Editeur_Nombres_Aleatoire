@@ -18,8 +18,7 @@ public:
 
     unsigned char suivantPixelBruit();
     double calculeMoyenne(int nbTirages) const;
-    double calculeVariance(int nbTirages) const;
-    double calculeEcartType(int nbTirages) const;
+    double calculeCV(int nbTirages) const;
     double calculeMediane(int nbTirages) const;
     double calculeUniformite(int nbTirages) const;
     double calculeAutocorrelation(int nbTirages) const;

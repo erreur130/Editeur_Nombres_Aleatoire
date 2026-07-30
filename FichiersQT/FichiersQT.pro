@@ -20,6 +20,9 @@ HEADERS += \
     rotationbits.h
 
 FORMS += \
+    aideModules.ui \
+    aideTests.ui \
+    infoProjet.ui \
     mainwindow.ui
 
 # Default rules for deployment.

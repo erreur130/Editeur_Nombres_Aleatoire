@@ -26,7 +26,17 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
+private slots:
+    void on_actionModules_triggered();
+    void on_actionTests_triggered();
+
+    void on_spinBoxResolution_valueChanged(int arg1);
+
+    void on_spinBoxGraine_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 };
 #endif // MAINWINDOW_H
