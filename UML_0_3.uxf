@@ -5,9 +5,9 @@
     <id>UMLClass</id>
     <coordinates>
       <x>680</x>
-      <y>150</y>
+      <y>110</y>
       <w>230</w>
-      <h>115</h>
+      <h>155</h>
     </coordinates>
     <panel_attributes>MainWindow
 --
@@ -18,7 +18,12 @@
 - afficherListeModules()
 - miseAJourMethonesActives()
 - afficherBruit()
-- spinBox_on_resolutionBruit_valueChanged(value : int)
+# resizeEvent(event : QResizeEvent*)
+
+- on_actionModules_triggered()
+- on_actionTests_triggered()
+- on_spinBox_valueChanged(arg1 : int)
+- on_spinBoxGraine_valueChanged(arg1 : int)
  /*+ drag et drop*/</panel_attributes>
     <additional_attributes/>
   </element>
@@ -46,8 +51,7 @@ EGNA
 
 + suivantPixelBruit() : unsigned char
 + calculeMoyenne(nbTirages : int) : double
-+ calculeVariance(nbTirages : int) : double
-+ calculeEcartType(nbTirages : int) : double
++ calculeCV(nbTirages : int) : double
 + calculeMediane(nbTirages : int) : double
 + calculeUniformite(nbTirages : int) : double
 + calculeAutocorrelation(nbTirages : int) : double
@@ -243,8 +247,8 @@ m2=0..1</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>675</x>
-      <y>120</y>
+      <x>925</x>
+      <y>130</y>
       <w>90</w>
       <h>25</h>
     </coordinates>
@@ -256,13 +260,13 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>695</x>
+      <x>745</x>
       <y>140</y>
-      <w>15</w>
-      <h>35</h>
+      <w>190</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>360.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
