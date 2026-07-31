@@ -4,11 +4,20 @@
 #include "ui_aideTests.h"
 #include "ui_infoProjet.h"
 
+#include <QTimer>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , modulesActif(new QVector<Module*>), modulesParDefaut(QVector<Module*>()), editeur(EGNA(modulesActif)), ui(new Ui::MainWindow){
     ui->setupUi(this);
 
+    // Initialiser l'image avec 1px blanc
+    QImage image(1, 1, QImage::Format_Indexed8);
+    QVector<QRgb> colorTable(255);
+    colorTable[0] = qRgb(255, 255, 255);
+    image.fill(0);
+    image.setColorTable(colorTable);
+    ui->imageBruit->setPixmap(QPixmap::fromImage(image));
 }
 
 MainWindow::~MainWindow(){
@@ -18,27 +27,64 @@ MainWindow::~MainWindow(){
 void MainWindow::resizeEvent(QResizeEvent *event){
     QMainWindow::resizeEvent(event); //pour conserver le comportement par défaut
 
-    // le rezise de l'image carré
-    static bool estTest = true;
-    int tailleMin = (ui->layoutImage->geometry().height() < ui->layoutImage->geometry().width()) ? ui->layoutImage->geometry().height() : ui->layoutImage->geometry().width();
-    ui->imageBruit->setFixedSize(QSize(estTest?118:tailleMin-10, estTest?118:tailleMin-10));
-    estTest = false;
-
+    // le rezise de l'image carré / singleShot() pour que le layout ait le temps de s'update
+    QTimer::singleShot(0, this, [this](){
+        int tailleMin = qMin(ui->layoutImage->geometry().height(),ui->layoutImage->geometry().width());
+        ui->imageBruit->setFixedSize(QSize(tailleMin - 10, tailleMin - 10));
+    });
 }
+
 void MainWindow::afficherStats() const {
 
 }
 
 void MainWindow::afficherListeModules() const {
+    ui->listModulesTemplate->clear();
+    for (Module* module : modulesParDefaut){
+        QWidget *widget = new QWidget(module->creerPaneauParametres()); // on créé le widget
 
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
+
+        ui->listModulesTemplate->addItem(item); // on met la taille
+        ui->listModulesTemplate->setItemWidget(item, widget); // on met le widget
+    }
 }
 
-void MainWindow::miseAJourMethonesActives() const {
+void MainWindow::miseAJourMethodesActives() const {
+    ui->listModulesActifs->clear();
+    for (Module* module : modulesParDefaut){
+        QWidget *widget = new QWidget(module->creerPaneauParametres()); // on créé le widget
 
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
+
+        ui->listModulesActifs->addItem(item); // on met la taille
+        ui->listModulesActifs->setItemWidget(item, widget); // on met le widget
+    }
 }
 
 void MainWindow::afficherBruit(){
+    ui->imageBruit->clear();
 
+    int resolution = ui->spinBoxResolution->value();
+    QImage image(resolution, resolution, QImage::Format_Indexed8);
+
+    // Initialiser la palette
+    QVector<QRgb> colorTable(256);
+    for (int i = 0; i < 256; ++i) colorTable[i] = qRgb(i, i, i);
+    image.setColorTable(colorTable);
+
+    // création de l'image
+    for (int y = 0; y < resolution; ++y) {
+        for (int x = 0; x < resolution; ++x) {
+            unsigned char gris = editeur.suivantPixelBruit(); // nouvelle couleur généré
+            image.setPixel(x, y, gris);
+        }
+    }
+
+    // Affichage de l'image dans le label
+    ui->imageBruit->setPixmap(QPixmap::fromImage(image));
 }
 
 void MainWindow::on_actionModules_triggered(){
@@ -59,13 +105,29 @@ void MainWindow::on_actionTests_triggered(){
     fenetre->show();
 }
 
+void MainWindow::on_actionSauvegarder_sous_triggered(){
 
-void MainWindow::on_spinBoxResolution_valueChanged(int arg1){
+}
 
+void MainWindow::on_actionCharger_triggered(){
+
+}
+
+void MainWindow::on_spinBoxResolution_valueChanged(int){
+    // update
+    editeur.renitialiserEtat();
+    afficherBruit();
+    afficherStats();
 }
 
 
 void MainWindow::on_spinBoxGraine_valueChanged(int arg1){
+    // change la graine
+    editeur.changerGraine(arg1);
 
+    // update
+    editeur.renitialiserEtat();
+    afficherBruit();
+    afficherStats();
 }
 

@@ -21,7 +21,7 @@ void EGNA::renitialiserEtat(){
 }
 
 unsigned char EGNA::suivantPixelBruit(){
-
+    return 155; // pour tester
 }
 
 double EGNA::calculeMoyenne(int nbTirages) const {

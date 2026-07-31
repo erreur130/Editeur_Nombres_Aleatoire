@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow{
 
     void afficherStats() const;
     void afficherListeModules() const;
-    void miseAJourMethonesActives() const;
+    void miseAJourMethodesActives() const;
     void afficherBruit();
     //void spinBox_on_resolutionBruit_valueChanged(int value);
 
@@ -29,9 +29,9 @@ public:
 private slots:
     void on_actionModules_triggered();
     void on_actionTests_triggered();
-
+    void on_actionSauvegarder_sous_triggered();
+    void on_actionCharger_triggered();
     void on_spinBoxResolution_valueChanged(int arg1);
-
     void on_spinBoxGraine_valueChanged(int arg1);
 
 private:
