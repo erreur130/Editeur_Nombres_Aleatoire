@@ -16,12 +16,14 @@
 + ~MainWindow()
 - afficherStats()
 - afficherListeModules()
-- miseAJourMethonesActives()
+- miseAJourMethodesActives()
 - afficherBruit()
 # resizeEvent(event : QResizeEvent*)
 
 - on_actionModules_triggered()
 - on_actionTests_triggered()
+- on_actionSauvegarder_sous_triggered()
+- on_actionCharger_triggered()
 - on_spinBox_valueChanged(arg1 : int)
 - on_spinBoxGraine_valueChanged(arg1 : int)
  /*+ drag et drop*/</panel_attributes>
@@ -623,5 +625,86 @@ bg=red</panel_attributes>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>900.0;10.0;10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>160</y>
+      <w>55</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ui&gt;&gt;
+InfoProjet
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>230</y>
+      <w>55</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ui&gt;&gt;
+AideModules
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>195</y>
+      <w>55</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ui&gt;&gt;
+AideTests
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>905</x>
+      <y>230</y>
+      <w>115</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..
+- fenetre : AideModules
+m1=1..1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>905</x>
+      <y>200</y>
+      <w>115</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..
+- fenetre : AideTests
+m1=1..1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>905</x>
+      <y>165</y>
+      <w>115</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..
+- fenetre : InfoProjet
+m1=1..1
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
 </diagram>
