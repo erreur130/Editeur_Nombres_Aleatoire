@@ -7,6 +7,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    demandenomclasse.cpp \
     egna.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
     rotationbits.cpp
 
 HEADERS += \
+    demandenomclasse.h \
     egna.h \
     mainwindow.h \
     module.h \
@@ -22,6 +24,7 @@ HEADERS += \
 FORMS += \
     aideModules.ui \
     aideTests.ui \
+    demandenomclasse.ui \
     infoProjet.ui \
     mainwindow.ui
 

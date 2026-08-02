@@ -92,6 +92,13 @@
      </layout>
     </item>
     <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -817,13 +824,6 @@
      <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuAide">
-    <property name="title">
-     <string>Aide</string>
-    </property>
-    <addaction name="actionModules"/>
-    <addaction name="actionTests"/>
-   </widget>
    <widget class="QMenu" name="menuFichier">
     <property name="title">
      <string>Fichier</string>
@@ -831,8 +831,16 @@
     <addaction name="actionSauvegarder_sous"/>
     <addaction name="actionCharger"/>
    </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionModules"/>
+    <addaction name="actionTests"/>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuAide"/>
+   <addaction name="actionInfo_Projet"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionModules">
@@ -845,17 +853,6 @@
     <string>Tests</string>
    </property>
   </action>
-  <action name="actionInfo">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Info</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::MenuRole::TextHeuristicRole</enum>
-   </property>
-  </action>
   <action name="actionSauvegarder_sous">
    <property name="text">
     <string>Sauvegarder sous</string>
@@ -864,6 +861,11 @@
   <action name="actionCharger">
    <property name="text">
     <string>Charger</string>
+   </property>
+  </action>
+  <action name="actionInfo_Projet">
+   <property name="text">
+    <string>Info Projet</string>
    </property>
   </action>
  </widget>

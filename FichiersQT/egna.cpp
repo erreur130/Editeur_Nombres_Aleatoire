@@ -8,12 +8,33 @@ EGNA::~EGNA(){
 
 }
 
-void EGNA::charger(QString fichier){
+bool EGNA::charger(QString nomFichier){
+    QFile fichier(nomFichier);
 
+    if(fichier.open(QFile::ReadOnly | QFile::Text)){ // Si on arrive pas à ouvrir
+        qDebug() << "Erreur" << fichier.errorString();
+        return false;
+    }
+
+    QString text = fichier.readAll();
+
+    /*truc pour charger et pour rénitialiser--------------------------------------------------------*/
+
+    fichier.close();
+    return true;
 }
 
-void EGNA::sauvegarder(QString fichier) const {
+bool EGNA::sauvegarder(QString nomFichier) const {
+    QFile fichier(nomFichier);
+    if(!fichier.open(QFile::WriteOnly | QFile::Text)){ // Si on arrive pas à ouvrir
+        qDebug() << "Erreur" << fichier.errorString();
+        return false;
+    }
 
+    /*fichier.write(...); -------------------------------------------------------------------------------*/
+
+    fichier.close();
+    return true;
 }
 
 void EGNA::renitialiserEtat(){

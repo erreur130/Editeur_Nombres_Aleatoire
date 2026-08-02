@@ -2,6 +2,7 @@
 #define EGNA_H
 
 #include "module.h"
+#include <QFile>
 
 class EGNA{
     uint64_t graine;
@@ -11,8 +12,8 @@ public:
     EGNA(QVector<Module*>*);
     ~EGNA();
 
-    void charger(QString fichier);
-    void sauvegarder(QString fichier) const;
+    bool charger(QString nomFichier);
+    bool sauvegarder(QString nomFichier) const;
     void renitialiserEtat();
     inline void changerGraine(uint64_t graine_){graine = graine_;};
 

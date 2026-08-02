@@ -3,6 +3,7 @@
 #include "ui_aideModules.h"
 #include "ui_aideTests.h"
 #include "ui_infoProjet.h"
+#include "demandenomclasse.h"
 
 #include <QTimer>
 
@@ -35,7 +36,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
 }
 
 void MainWindow::afficherStats() const {
-
+    // à voir si il y a des changement de concption sur la façon de faire les calcules --------------------------------------------------------------------------------------
 }
 
 void MainWindow::afficherListeModules() const {
@@ -105,12 +106,41 @@ void MainWindow::on_actionTests_triggered(){
     fenetre->show();
 }
 
-void MainWindow::on_actionSauvegarder_sous_triggered(){
+void MainWindow::on_actionInfo_Projet_triggered(){
+    QDialog *fenetre = new QDialog();
+    Ui::InfoProjet ui;
+    ui.setupUi(fenetre);
+    fenetre->setWindowFlags(Qt::Window);  // force que ce soit une fenêtre indépendante
+    fenetre->setWindowTitle(" ");
+    fenetre->show();
+}
 
+void MainWindow::on_actionSauvegarder_sous_triggered(){
+    QString nomFichier;
+
+    // demande à l'utilisateur le nom du ficher à créé
+    DemandeNomClasse *fenetre = new DemandeNomClasse(this);
+    connect(fenetre, SIGNAL(envoyerNomClasse(QString)), this, SLOT(recevoirNomClasse(QString)));
+    fenetre->setWindowTitle(" ");
+    fenetre->exec(); // bloque la fenetre
+
+    // en attente d'une réponse ou non (recevoirNomClasse() est la suite)
 }
 
 void MainWindow::on_actionCharger_triggered(){
+    QString nomFichier = QFileDialog::getOpenFileName( // permet de chercher un fichier
+        0,
+        "Gestionaire des fichiers",
+        "/home",
+        "Fichiers spéciaux (*.txt)"); // format txt à modifier si nésésaire -----------------------------------------------------------------------------
 
+    if(nomFichier != ""){ // Si il existe on charge les données, puis le visuel
+        editeur.charger(nomFichier);
+
+        miseAJourMethodesActives();
+        afficherBruit();
+        afficherStats();
+    }
 }
 
 void MainWindow::on_spinBoxResolution_valueChanged(int){
@@ -129,5 +159,10 @@ void MainWindow::on_spinBoxGraine_valueChanged(int arg1){
     editeur.renitialiserEtat();
     afficherBruit();
     afficherStats();
+}
+
+void MainWindow::recevoirNomClasse(QString nomClasse){
+    if(nomClasse != "")
+        editeur.sauvegarder(nomClasse);
 }
 
