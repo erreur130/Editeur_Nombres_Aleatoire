@@ -19,6 +19,11 @@ MainWindow::MainWindow(QWidget *parent)
     image.fill(0);
     image.setColorTable(colorTable);
     ui->imageBruit->setPixmap(QPixmap::fromImage(image));
+
+    //On limite les valeurs possible à mettre dans le QLineEdite pour la graine (hexadécimale)
+    ui->textGraine->setValidator(new QRegularExpressionValidator(QRegularExpression("^0x[0-9A-Fa-f]{1,16}$"), ui->textGraine));
+    // On met la graine en visuel
+    ui->textGraine->setText("0x" + QString::number(editeur.avoirGraine(), 16));
 }
 
 MainWindow::~MainWindow(){
@@ -150,19 +155,24 @@ void MainWindow::on_spinBoxResolution_valueChanged(int){
     afficherStats();
 }
 
-
-void MainWindow::on_spinBoxGraine_valueChanged(int arg1){
-    // change la graine
-    editeur.changerGraine(arg1);
-
-    // update
-    editeur.renitialiserEtat();
-    afficherBruit();
-    afficherStats();
-}
-
 void MainWindow::recevoirNomClasse(QString nomClasse){
     if(nomClasse != "")
         editeur.sauvegarder(nomClasse);
+}
+
+void MainWindow::on_textGraine_editingFinished(){
+    // change la graine
+    bool ok;
+    uint64_t valeur = ui->textGraine->text().toULongLong(&ok, 16); // base 16
+    if (ok){
+        qDebug() << "Graine changer";
+        editeur.changerGraine(valeur);
+
+        // update
+        editeur.renitialiserEtat();
+        afficherBruit();
+        afficherStats();
+    } else
+        qDebug() << "Graine non changer";
 }
 

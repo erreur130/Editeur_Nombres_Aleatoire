@@ -15,9 +15,10 @@ public:
     bool charger(QString nomFichier);
     bool sauvegarder(QString nomFichier) const;
     void renitialiserEtat();
+    inline uint64_t avoirGraine() const {return graine;};
     inline void changerGraine(uint64_t graine_){graine = graine_;};
 
-    unsigned char suivantPixelBruit();
+    uint8_t suivantPixelBruit();
     double calculeMoyenne(int nbTirages) const;
     double calculeCV(int nbTirages) const;
     double calculeMediane(int nbTirages) const;

@@ -21,7 +21,6 @@ class MainWindow : public QMainWindow{
     void afficherListeModules() const;
     void miseAJourMethodesActives() const;
     void afficherBruit();
-    //void spinBox_on_resolutionBruit_valueChanged(int value);
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -34,7 +33,7 @@ private slots:
     void on_actionCharger_triggered();
     void on_actionInfo_Projet_triggered();
     void on_spinBoxResolution_valueChanged(int arg1);
-    void on_spinBoxGraine_valueChanged(int arg1);
+    void on_textGraine_editingFinished();
 
 public slots:
     void recevoirNomClasse(QString);

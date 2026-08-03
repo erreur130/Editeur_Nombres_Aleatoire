@@ -5,18 +5,17 @@
 
 class RotationBits : public Module{
     Q_OBJECT
-    unsigned char decalage;
+    uint8_t decalage;
 public:
-    RotationBits(QObject*);
+    RotationBits(QObject*, uint8_t = 1);
     ~RotationBits();
-    uint64_t etatSuivant(uint64_t etat[2]) const ;
+    void valeurSuivante(uint64_t (&val)[2]) const ;
     Module* copie() const;
     QWidget* creerPaneauParametres() const;
-    QWidget* creerBulleInfo() const;
     void sauvegarder(std::ostream &) const;
 
-    inline void changerDecalage(unsigned char decalage_){decalage = decalage_;};
-    inline unsigned char avoirDecalage() const {return decalage;};
+    inline void changerDecalage(uint8_t decalage_){decalage = decalage_;};
+    inline uint8_t avoirDecalage() const {return decalage;};
 };
 
 #endif // ROTATIONBITS_H

@@ -1,27 +1,30 @@
 #include "rotationbits.h"
 
-RotationBits::RotationBits(QObject* parent)
-    : Module(parent), decalage(1){
-
+RotationBits::RotationBits(QObject* parent, uint8_t decalage_)
+    : Module(parent), decalage(decalage_){
+    // 0 < decalage < 64
 }
 
-RotationBits::~RotationBits(){
+RotationBits::~RotationBits(){}
 
-}
+void RotationBits::valeurSuivante(uint64_t (&val)[2]) const {
+    uint64_t retenue0 = 0xFFFFFFFFFFFFFFFFULL >> (64-decalage);  // des 1 sur les bits qui seraient remplacé
+    uint64_t retenue1 = 0xFFFFFFFFFFFFFFFFULL >> (64-decalage);  // des 1 sur les bits qui seraient remplacé
+    retenue0 &= val[0]; // la retenue0 devient les bits qui vont disparaitre dans la partie [0]
+    retenue1 &= val[1]; // la retenue1 devient les bits qui vont disparaitre dans la partie [1]
 
-uint64_t RotationBits::etatSuivant(uint64_t etat[2]) const {
+    val[0] >>= decalage; // on décale la partie haute (trou à gauche dans la partie [0])
+    val[1] >>= decalage; // on décale la partie haute (trou à gauche dans la partie [1])
 
+    val[1] |= retenue0 << (64 - decalage); // on remplis le trou à gauche (car la retenue est sauvegardé à droite) par ce qui est sortit de l'autre partie de val
+    val[0] |= retenue1 << (64 - decalage); // on remplis le trou à gauche (car la retenue est sauvegardé à droite) par ce qui est sortit de l'autre partie de val
 }
 
 Module* RotationBits::copie() const{
-
+    return new RotationBits(parent(),decalage);
 }
 
 QWidget* RotationBits::creerPaneauParametres() const{
-
-}
-
-QWidget* RotationBits::creerBulleInfo() const{
 
 }
 

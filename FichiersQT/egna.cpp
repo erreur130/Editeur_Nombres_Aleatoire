@@ -1,12 +1,17 @@
 #include "egna.h"
 
-EGNA::EGNA(QVector<Module*> *modules_) {
+EGNA::EGNA(QVector<Module*> *modules_)
+    : graine(uint64_t()), etat{uint64_t()}, modules(modules_){
 
+    using namespace std::chrono;
+    time_point<system_clock> now = system_clock::now();
+    system_clock::duration temps = now.time_since_epoch();
+    // Conversion duration -> nanoseconds -> uint64_t
+    nanoseconds tempsNano = duration_cast<nanoseconds>(temps);
+    graine = static_cast<uint64_t>(tempsNano.count());
 }
 
-EGNA::~EGNA(){
-
-}
+EGNA::~EGNA(){}
 
 bool EGNA::charger(QString nomFichier){
     QFile fichier(nomFichier);
@@ -38,11 +43,25 @@ bool EGNA::sauvegarder(QString nomFichier) const {
 }
 
 void EGNA::renitialiserEtat(){
-
+    // cas vide
+    if (modules->size() == 0){
+        etat[0] = etat[1] = 255;
+        return;
+    }
+    // cas non vide
+    // on initalise l'etat avec la graine
+    etat[0] = graine;
+    etat[1] = -graine; // -graine est une valeur non signé, c'est juste pour faire une valeur différente
+    for (qsizetype indice = 0; indice < modules->size(); indice++){ // On parcourt tout les modules
+        modules->at(indice)->valeurSuivante(etat);
+    }
 }
 
-unsigned char EGNA::suivantPixelBruit(){
-    return 155; // pour tester
+uint8_t EGNA::suivantPixelBruit(){
+    for (qsizetype indice = 0; indice < modules->size(); indice++){ // On parcourt tout les modules
+        modules->at(indice)->valeurSuivante(etat);
+    }
+    return static_cast<uint8_t>(etat[0]); // le cast ne prend que les 8 derniers bits ce qui correspond à faire modulo 256
 }
 
 double EGNA::calculeMoyenne(int nbTirages) const {
