@@ -26,7 +26,7 @@
 - on_actionSauvegarder_sous_triggered()
 - on_actionCharger_triggered()
 - on_spinBox_valueChanged(arg1 : int)
-- on_spinBoxGraine_valueChanged(arg1 : int)
+- on_textGraine_editingFinished()
 + recevoirNomClasse(nomClasse : QString)
  /*+ drag et drop*/</panel_attributes>
     <additional_attributes/>
@@ -51,9 +51,10 @@ EGNA
 + charger(nomFichier : QString) : bool
 + sauvegarder(nomFichier : QString) : bool
 + renitialiserEtat()
++ avoirGraine() : uint64_t
 + changerGraine(graine_ : uint64_t)
 
-+ suivantPixelBruit() : unsigned char
++ suivantPixelBruit() : uint8_t
 + calculeMoyenne(nbTirages : int) : double
 + calculeCV(nbTirages : int) : double
 + calculeMediane(nbTirages : int) : double
@@ -211,7 +212,7 @@ bg=blue</panel_attributes>
 --
 + Module(parent : QObject*)
 + ~Module()
-/*+ etatSuivant(etat[2] : uint64_t) : uint64_t*/
+/*+ valeurSuivant(val[2] : uint64_t)*/
 /*+ copie() : Module**/
 /*+ creerPanneauParametres() : QWidget**/
 /*+ sauvegarder(os : std::ostream)*/
@@ -338,40 +339,40 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>130</x>
+      <x>90</x>
       <y>440</y>
-      <w>185</w>
+      <w>225</w>
       <h>105</h>
     </coordinates>
     <panel_attributes>RotationBits
 --
-- decalage : unsigned char
+- decalage : uint8_t
 --
-+ RotationBits(parent : QObject*)
++ RotationBits(parent : QObject*, decalage_ : uint8_t)
 + ~RotationBits()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
-+ changerDecalage(decalage_ : unsigned char)
-+ avoirDecalage() : unsigned char</panel_attributes>
++ changerDecalage(decalage_ : uint8_t)
++ avoirDecalage() : uint8_t</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>610</x>
+      <x>570</x>
       <y>605</y>
-      <w>185</w>
+      <w>225</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>MultiplisationConstante
 --
 - constante : uint64_t
 --
-+ AdditionConstante(parent : QObject*)
++ AdditionConstante(parent : QObject*, constante_ : uint64_t)
 + ~AdditionConstante()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
@@ -382,18 +383,18 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>350</x>
+      <x>335</x>
       <y>440</y>
-      <w>185</w>
+      <w>200</w>
       <h>135</h>
     </coordinates>
     <panel_attributes>Xorshift
 --
 - a, b, c : unsigned char
 --
-+ Xorshift(parent : QObject*)
++ Xorshift(parent : QObject*, a_, b_, c_ : unsigned char)
 + ~Xorshift()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
@@ -410,7 +411,7 @@ bg=blue</panel_attributes>
     <coordinates>
       <x>860</x>
       <y>605</y>
-      <w>185</w>
+      <w>255</w>
       <h>145</h>
     </coordinates>
     <panel_attributes>PCG
@@ -418,9 +419,9 @@ bg=blue</panel_attributes>
 - mult, incr, mod : uint64_t
 - permu : int
 --
-+ PCG(parent : QObject*)
++ PCG(parent : QObject*, mult_, incr_, mod_ : uint64_t, permu_ : int)
 + ~PCG()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
@@ -444,9 +445,9 @@ bg=blue</panel_attributes>
 --
 - a, b : uint64_t
 --
-+ SplitMix64(parent : QObject*)
++ SplitMix64(parent : QObject*, a_, b_ : uint64_t)
 + ~SplitMix64()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
@@ -461,16 +462,16 @@ bg=blue</panel_attributes>
     <coordinates>
       <x>860</x>
       <y>440</y>
-      <w>185</w>
+      <w>200</w>
       <h>145</h>
     </coordinates>
     <panel_attributes>LCG
 --
 - mult, incr, mod : uint64_t
 --
-+ LCG(parent : QObject*)
++ LCG(parent : QObject*, mult_, incr_, mod_ : uint64_t)
 + ~LCG()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
@@ -485,18 +486,18 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>610</x>
+      <x>570</x>
       <y>445</y>
-      <w>185</w>
+      <w>225</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>AdditionConstante
 --
 - constante : uint64_t
 --
-+ AdditionConstante(parent : QObject*)
++ AdditionConstante(parent : QObject*, constante_ : uint64_t)
 + ~AdditionConstante()
-/+ etatSuivant(etat[2] : uint64_t) : uint64_t/
+/+ valeurSuivant(val[2] : uint64_t)/
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
@@ -507,7 +508,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1070</x>
+      <x>1140</x>
       <y>635</y>
       <w>125</w>
       <h>30</h>
@@ -521,7 +522,7 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1040</x>
+      <x>1110</x>
       <y>640</y>
       <w>40</w>
       <h>15</h>
