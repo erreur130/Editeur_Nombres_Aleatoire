@@ -20,10 +20,18 @@ MainWindow::MainWindow(QWidget *parent)
     image.setColorTable(colorTable);
     ui->imageBruit->setPixmap(QPixmap::fromImage(image));
 
-    //On limite les valeurs possible à mettre dans le QLineEdite pour la graine (hexadécimale)
+    // On limite les valeurs possible à mettre dans le QLineEdite pour la graine (hexadécimale)
     ui->textGraine->setValidator(new QRegularExpressionValidator(QRegularExpression("^0x[0-9A-Fa-f]{1,16}$"), ui->textGraine));
     // On met la graine en visuel
     ui->textGraine->setText("0x" + QString::number(editeur.avoirGraine(), 16));
+
+    // On met le nb valeur en visuel (par défaut c'est 256*256)
+    ui->labelNbValeurs->setText(QString::number(ui->spinBoxResolution->value() * ui->spinBoxResolution->value()));
+
+    // On remplie la liste des templates
+    modulesParDefaut.push_back(new RotationBits(this, 5));
+    /* ...----------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    afficherListeModules();
 }
 
 MainWindow::~MainWindow(){
@@ -40,20 +48,42 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     });
 }
 
-void MainWindow::afficherStats() const {
-    // à voir si il y a des changement de concption sur la façon de faire les calcules --------------------------------------------------------------------------------------
+void MainWindow::afficherStats(bool vider) const {
+    if (vider){ // affichage par défaut
+        ui->labelAquilibreBits->setText("---");
+        ui->labelMoyenne->setText("---");
+        ui->labelCV->setText("---");
+        ui->labelUniformite->setText("---");
+        ui->labelCorrelation->setText("---");
+    } else {
+        ui->labelAquilibreBits->setText(QString::number(editeur.avoirEquilibreBits()));
+        ui->labelMoyenne->setText(QString::number(editeur.avoirMoyenne()));
+        ui->labelCV->setText(QString::number(editeur.avoirCV()));
+        ui->labelUniformite->setText(QString::number(editeur.avoirUniformite()));
+        ui->labelCorrelation->setText(QString::number(editeur.avoirAutocorrelation()));
+    }
 }
 
 void MainWindow::afficherListeModules() const {
     ui->listModulesTemplate->clear();
     for (Module* module : modulesParDefaut){
-        QWidget *widget = new QWidget(module->creerPaneauParametres()); // on créé le widget
+        QWidget *widget = module->creerPaneauParametres(); // on créé le widget (le new est dans la fonction)
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
 
         ui->listModulesTemplate->addItem(item); // on met la taille
         ui->listModulesTemplate->setItemWidget(item, widget); // on met le widget
+
+        // Rajout du séparateur
+        QListWidgetItem* separateur = new QListWidgetItem();
+        separateur->setFlags(Qt::NoItemFlags); // non sélectionnable, non cliquable
+        separateur->setSizeHint(QSize(0,1)); // hauteur réservée pour la ligne, largeur auto
+        QFrame* ligne = new QFrame();
+        ligne->setFrameShape(QFrame::HLine);
+        ligne->setFrameShadow(QFrame::Sunken);
+        ui->listModulesTemplate->addItem(separateur); // on met la taille
+        ui->listModulesTemplate->setItemWidget(separateur, ligne); // on met le séparateur
     }
 }
 
@@ -137,22 +167,33 @@ void MainWindow::on_actionCharger_triggered(){
         0,
         "Gestionaire des fichiers",
         "/home",
-        "Fichiers spéciaux (*.txt)"); // format txt à modifier si nésésaire -----------------------------------------------------------------------------
+        "Fichiers spéciaux (*.txt)"); // format txt à modifier si nésésaire ----------------------------------------------------------------------------------------------
 
     if(nomFichier != ""){ // Si il existe on charge les données, puis le visuel
         editeur.charger(nomFichier);
 
-        miseAJourMethodesActives();
-        afficherBruit();
-        afficherStats();
+        // update
+        if (modulesActif->size() > 0){ // Si nésésaire
+            miseAJourMethodesActives();
+            afficherBruit();
+            afficherStats(true);
+        } else {
+            afficherStats();
+        }
     }
 }
 
-void MainWindow::on_spinBoxResolution_valueChanged(int){
+void MainWindow::on_spinBoxResolution_valueChanged(int val){
+    ui->labelNbValeurs->setText(QString::number(ui->spinBoxResolution->value() * ui->spinBoxResolution->value()));
     // update
-    editeur.renitialiserEtat();
-    afficherBruit();
-    afficherStats();
+    if (modulesActif->size() > 0){ // Si nésésaire
+        editeur.changerNbValeursTotale(val);
+        editeur.renitialiserEtat();
+        afficherBruit();
+        afficherStats(true);
+    } else {
+        afficherStats();
+    }
 }
 
 void MainWindow::recevoirNomClasse(QString nomClasse){
@@ -163,15 +204,19 @@ void MainWindow::recevoirNomClasse(QString nomClasse){
 void MainWindow::on_textGraine_editingFinished(){
     // change la graine
     bool ok;
-    uint64_t valeur = ui->textGraine->text().toULongLong(&ok, 16); // base 16
+    uint64_t valeur = ui->textGraine->text().toULongLong(&ok, 16); // base 16 (hexadécimale)
     if (ok){
         qDebug() << "Graine changer";
         editeur.changerGraine(valeur);
 
         // update
-        editeur.renitialiserEtat();
-        afficherBruit();
-        afficherStats();
+        if (modulesActif->size() > 0){ // Si nésésaire
+            editeur.renitialiserEtat();
+            afficherBruit();
+            afficherStats(true);
+        } else {
+            afficherStats();
+        }
     } else
         qDebug() << "Graine non changer";
 }

@@ -1,10 +1,6 @@
 #include "module.h"
 
 Module::Module(QObject* parent)
-    :QObject(parent){
+    :QObject(parent){}
 
-}
-
-Module::~Module(){
-
-}
+Module::~Module(){}

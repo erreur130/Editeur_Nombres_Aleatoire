@@ -24,11 +24,44 @@ Module* RotationBits::copie() const{
     return new RotationBits(parent(),decalage);
 }
 
-QWidget* RotationBits::creerPaneauParametres() const{
+QWidget* RotationBits::creerPaneauParametres(){
+    QWidget* paneau = new QWidget;
+    QVBoxLayout* layoutVerticale = new QVBoxLayout(paneau);
+    QFormLayout* layoutParametre = new QFormLayout(); // rajouter plus tard dans layoutVerticale
 
+    QLabel* labelTitre = new QLabel("Rotation Bits");
+    QSpinBox* nbDecalage = new QSpinBox();
+
+    // paramètre du paneau :
+    labelTitre->setAlignment(Qt::AlignHCenter);
+    nbDecalage->setMinimum(1);
+    nbDecalage->setMaximum(63);
+    nbDecalage->setValue(decalage);
+    connect(nbDecalage, QOverload<int>::of(&QSpinBox::valueChanged), this, &RotationBits::changerDecalage);
+
+    // on répartie les Wiget dans les layouts
+    layoutParametre->addRow("Décalage :", nbDecalage);
+    layoutVerticale->addWidget(labelTitre);
+    layoutVerticale->addLayout(layoutParametre);
+
+    return paneau;
 }
 
-void RotationBits::sauvegarder(std::ostream &) const{
+#include <iostream> // à retirer si je fait avec QString
+void RotationBits::sauvegarder(std::ostream &os) const{
+    os  << "    uint64_t retenue0 = 0xFFFFFFFFFFFFFFFFULL >> (64-decalage);  // des 1 sur les bits qui seraient remplacé" << std::endl
+        << "    uint64_t retenue1 = 0xFFFFFFFFFFFFFFFFULL >> (64-decalage);  // des 1 sur les bits qui seraient remplacé" << std::endl
+        << "    retenue0 &= val[0]; // la retenue0 devient les bits qui vont disparaitre dans la partie [0]" << std::endl
+        << "    retenue1 &= val[1]; // la retenue1 devient les bits qui vont disparaitre dans la partie [1]" << std::endl
+        << std::endl
+        << "    val[0] >>= decalage; // on décale la partie haute (trou à gauche dans la partie [0])" << std::endl
+        << "    val[1] >>= decalage; // on décale la partie haute (trou à gauche dans la partie [1])" << std::endl
+        << std::endl
+        << "    val[1] |= retenue0 << (64 - decalage); // on remplis le trou à gauche (car la retenue est sauvegardé à droite) par ce qui est sortit de l'autre partie de val" << std::endl
+        << "    val[0] |= retenue1 << (64 - decalage); // on remplis le trou à gauche (car la retenue est sauvegardé à droite) par ce qui est sortit de l'autre partie de val" << std::endl;
+}
 
+QString RotationBits::avoirNom() const {
+    return QString("RotationBits");
 }
 

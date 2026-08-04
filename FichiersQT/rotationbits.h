@@ -11,8 +11,9 @@ public:
     ~RotationBits();
     void valeurSuivante(uint64_t (&val)[2]) const ;
     Module* copie() const;
-    QWidget* creerPaneauParametres() const;
+    QWidget* creerPaneauParametres();
     void sauvegarder(std::ostream &) const;
+    QString avoirNom() const;
 
     inline void changerDecalage(uint8_t decalage_){decalage = decalage_;};
     inline uint8_t avoirDecalage() const {return decalage;};

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include "egna.h"
+#include "rotationbits.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow{
     QVector<Module*> modulesParDefaut;
     EGNA editeur;
 
-    void afficherStats() const;
+    void afficherStats(bool vider = true) const;
     void afficherListeModules() const;
     void miseAJourMethodesActives() const;
     void afficherBruit();
