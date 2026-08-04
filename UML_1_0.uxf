@@ -34,10 +34,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>395</x>
-      <y>155</y>
-      <w>190</w>
-      <h>180</h>
+      <x>355</x>
+      <y>125</y>
+      <w>230</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Editeur de Générateur à 
 Nombres aléatoire&gt;&gt;
@@ -45,22 +45,29 @@ EGNA
 --
 - graine : uint64_t
 - etat[2] : uint64_t
+- double moyenne, cv, uniformite, autoCorrelation, equilibleBits
 --
 + EGNA(QVector&lt;Module*&gt; *)
 + ~EGNA()
+
 + charger(nomFichier : QString) : bool
 + sauvegarder(nomFichier : QString) : bool
 + renitialiserEtat()
 + avoirGraine() : uint64_t
 + changerGraine(graine_ : uint64_t)
-
++ changerNbValeursTotale(nbValeursTotale_ : int)
 + suivantPixelBruit() : uint8_t
-+ calculeMoyenne(nbTirages : int) : double
-+ calculeCV(nbTirages : int) : double
-+ calculeMediane(nbTirages : int) : double
-+ calculeUniformite(nbTirages : int) : double
-+ calculeAutocorrelation(nbTirages : int) : double
-+ calculeEquilibreBits(nbTirages : int) : double</panel_attributes>
++ avoirMoyenne() : double
++ avoirCV() : double
++ avoirUniformite() : double
++ avoirAutocorrelation() : double
++ avoirEquilibreBits() : double
+
+- calculeMoyenne()
+- calculeCV()
+- calculeUniformite()
+- calculeAutocorrelation()
+- calculeEquilibreBits()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -80,7 +87,7 @@ m2=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>125</x>
+      <x>105</x>
       <y>160</y>
       <w>185</w>
       <h>170</h>
@@ -127,7 +134,7 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>120</x>
+      <x>100</x>
       <y>90</y>
       <w>75</w>
       <h>30</h>
@@ -141,19 +148,19 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>305</x>
+      <x>285</x>
       <y>240</y>
-      <w>100</w>
+      <w>80</w>
       <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 Créé la Classe</panel_attributes>
-    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>150</x>
+      <x>130</x>
       <y>115</y>
       <w>15</w>
       <h>55</h>
@@ -164,8 +171,8 @@ Créé la Classe</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>220</x>
-      <y>85</y>
+      <x>200</x>
+      <y>80</y>
       <w>75</w>
       <h>50</h>
     </coordinates>
@@ -180,13 +187,13 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>250</x>
-      <y>130</y>
+      <x>230</x>
+      <y>125</y>
       <w>15</w>
-      <h>40</h>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -194,10 +201,10 @@ bg=blue</panel_attributes>
       <x>530</x>
       <y>100</y>
       <w>15</w>
-      <h>65</h>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -216,6 +223,7 @@ bg=blue</panel_attributes>
 /*+ copie() : Module**/
 /*+ creerPanneauParametres() : QWidget**/
 /*+ sauvegarder(os : std::ostream)*/
+/*+ avoirNom() : QString*/
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -331,10 +339,10 @@ bg=blue</panel_attributes>
       <x>445</x>
       <y>115</y>
       <w>15</w>
-      <h>50</h>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;20.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -354,6 +362,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerDecalage(decalage_ : uint8_t)
 + avoirDecalage() : uint8_t</panel_attributes>
     <additional_attributes/>
@@ -376,6 +385,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerConstante(constante_ : uint64_t)
 + avoirConstante() : uint64_t</panel_attributes>
     <additional_attributes/>
@@ -398,6 +408,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerA(a_ : unsigned char)
 + changerB(b_ : unsigned char)
 + changerC(c_ : unsigned char)
@@ -425,6 +436,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerMult(mult_ : uint64_t)
 + changerIncr(incr_ : uint64_t)
 + changerMod(mod_ : uint64_t)
@@ -451,6 +463,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerA(a_ : uint64_t)
 + changerB(b_ : uint64_t)
 + avoirA() : uint64_t
@@ -475,6 +488,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerMult(mult_ : uint64_t)
 + changerIncr(incr_ : uint64_t)
 + changerMod(mod_ : uint64_t)
@@ -501,6 +515,7 @@ bg=blue</panel_attributes>
 /+ copie() : Module*/
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(os : std::ostream) : std::ostream/
+/+ avoirNom() : QString/
 + changerConstante(constante_ : uint64_t)
 + avoirConstante() : uint64_t</panel_attributes>
     <additional_attributes/>
