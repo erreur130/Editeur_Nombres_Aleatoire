@@ -12,7 +12,7 @@ public:
     void valeurSuivante(uint64_t (&val)[2]) const ;
     Module* copie() const;
     QWidget* creerPaneauParametres();
-    void sauvegarder(std::ostream &) const;
+    void sauvegarder(QFile &) const;
     QString avoirNom() const;
 
     inline void changerDecalage(uint8_t decalage_){decalage = decalage_;};

@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // On remplie la liste des templates
     modulesParDefaut.push_back(new RotationBits(this, 5));
+    modulesParDefaut.push_back(new RotationBits(this, 2)); // pour des tests
     /* ...----------------------------------------------------------------------------------------------------------------------------------------------------------*/
     afficherListeModules();
 }
@@ -56,24 +57,24 @@ void MainWindow::afficherStats(bool vider) const {
         ui->labelUniformite->setText("---");
         ui->labelCorrelation->setText("---");
     } else {
-        ui->labelAquilibreBits->setText(QString::number(editeur.avoirEquilibreBits()));
-        ui->labelMoyenne->setText(QString::number(editeur.avoirMoyenne()));
-        ui->labelCV->setText(QString::number(editeur.avoirCV()));
-        ui->labelUniformite->setText(QString::number(editeur.avoirUniformite()));
-        ui->labelCorrelation->setText(QString::number(editeur.avoirAutocorrelation()));
+        ui->labelAquilibreBits->setText(QString::number(editeur.avoirEquilibreBits()*100));
+        ui->labelMoyenne->setText(QString::number(editeur.avoirMoyenne()*100));
+        ui->labelCV->setText(QString::number(editeur.avoirCV()*100));
+        ui->labelUniformite->setText(QString::number(editeur.avoirUniformite()*100));
+        ui->labelCorrelation->setText(QString::number(editeur.avoirAutocorrelation()*100));
     }
 }
 
 void MainWindow::afficherListeModules() const {
-    ui->listModulesTemplate->clear();
+    ui->listeModulesTemplate->clear();
     for (Module* module : modulesParDefaut){
         QWidget *widget = module->creerPaneauParametres(); // on créé le widget (le new est dans la fonction)
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
 
-        ui->listModulesTemplate->addItem(item); // on met la taille
-        ui->listModulesTemplate->setItemWidget(item, widget); // on met le widget
+        ui->listeModulesTemplate->addItem(item); // on met la taille
+        ui->listeModulesTemplate->setItemWidget(item, widget); // on met le widget
 
         // Rajout du séparateur
         QListWidgetItem* separateur = new QListWidgetItem();
@@ -82,21 +83,21 @@ void MainWindow::afficherListeModules() const {
         QFrame* ligne = new QFrame();
         ligne->setFrameShape(QFrame::HLine);
         ligne->setFrameShadow(QFrame::Sunken);
-        ui->listModulesTemplate->addItem(separateur); // on met la taille
-        ui->listModulesTemplate->setItemWidget(separateur, ligne); // on met le séparateur
+        ui->listeModulesTemplate->addItem(separateur); // on met la taille
+        ui->listeModulesTemplate->setItemWidget(separateur, ligne); // on met le séparateur
     }
 }
 
 void MainWindow::miseAJourMethodesActives() const {
-    ui->listModulesActifs->clear();
+    ui->listeModulesActifs->clear();
     for (Module* module : modulesParDefaut){
         QWidget *widget = new QWidget(module->creerPaneauParametres()); // on créé le widget
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
 
-        ui->listModulesActifs->addItem(item); // on met la taille
-        ui->listModulesActifs->setItemWidget(item, widget); // on met le widget
+        ui->listeModulesActifs->addItem(item); // on met la taille
+        ui->listeModulesActifs->setItemWidget(item, widget); // on met le widget
     }
 }
 

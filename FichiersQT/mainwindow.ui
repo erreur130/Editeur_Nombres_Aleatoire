@@ -39,9 +39,18 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="listModulesTemplate">
+         <widget class="QListWidget" name="listeModulesTemplate">
           <property name="styleSheet">
            <string notr="true"/>
+          </property>
+          <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDropMode::DragOnly</enum>
+          </property>
+          <property name="supportedDragActions">
+           <set>Qt::DropAction::CopyAction|Qt::DropAction::MoveAction</set>
           </property>
          </widget>
         </item>
@@ -73,9 +82,24 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="listModulesActifs">
+         <widget class="ListeModulesActifs" name="listeModulesActifs">
+          <property name="acceptDrops">
+           <bool>true</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
+          </property>
+          <property name="dragEnabled">
+           <bool>false</bool>
+          </property>
+          <property name="dragDropOverwriteMode">
+           <bool>false</bool>
+          </property>
+          <property name="dragDropMode">
+           <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::DropAction::MoveAction</enum>
           </property>
          </widget>
         </item>
@@ -792,6 +816,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ListeModulesActifs</class>
+   <extends>QListWidget</extends>
+   <header>listemodulesactifs.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

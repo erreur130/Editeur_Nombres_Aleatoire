@@ -9,6 +9,7 @@ CONFIG += c++17
 SOURCES += \
     demandenomclasse.cpp \
     egna.cpp \
+    listemodulesactifs.cpp \
     main.cpp \
     mainwindow.cpp \
     module.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     demandenomclasse.h \
     egna.h \
+    listemodulesactifs.h \
     mainwindow.h \
     module.h \
     rotationbits.h

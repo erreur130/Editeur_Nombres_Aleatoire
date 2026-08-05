@@ -78,15 +78,22 @@ void EGNA::calculeMoyenne(){
     // nbValeursActuel commence à 1
     if (nbValeursActuel == 1){ // pour initialiser
         // prend les 53 bits de poids fort de etat[0] et les divise par 2^53
-        moyenne = static_cast<double>((etat[0] >> 11) / (1ULL << 53));
+        moyenne = static_cast<double>(etat[0] >> 11) / (1ULL << 53);
     } else {
         // moyene = ( (MoyTotal*nbValsTotalAvant) + (1autreMoy*1) ) / (nbVals)
-        moyenne = ( (moyenne*(nbValeursActuel-1)) + static_cast<double>((etat[0] >> 11) / (1ULL << 53)) ) / nbValeursActuel;
+        moyenne = ( (moyenne*(nbValeursActuel-1)) + static_cast<double>(etat[0] >> 11) / (1ULL << 53) ) / nbValeursActuel;
     }
 }
 
 void EGNA::calculeCV(){
-
+    if (moyenne != 0){
+        /* // à aprofondire
+        double variance = m2 / nbValeursActuel; // variance
+        double ecartType = std::sqrt(variance);
+        cv = ecartType / moyenne;   // coefficient de variation
+        */
+    } else
+        qDebug() << "moyenne == 0 !";
 }
 
 void EGNA::calculeUniformite(){
