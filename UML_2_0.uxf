@@ -4,10 +4,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>660</x>
-      <y>125</y>
-      <w>230</w>
-      <h>155</h>
+      <x>595</x>
+      <y>80</y>
+      <w>285</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>MainWindow
 --
@@ -17,6 +17,7 @@
 - afficherStats()
 - afficherListeModules()
 - miseAJourMethodesActives()
++ miseAJourTout()
 - afficherBruit()
 # resizeEvent(event : QResizeEvent*)
 
@@ -27,15 +28,17 @@
 - on_actionCharger_triggered()
 - on_spinBox_valueChanged(arg1 : int)
 - on_textGraine_editingFinished()
+
 + recevoirNomClasse(nomClasse : QString)
- /*+ drag et drop*/</panel_attributes>
++ recevoirIdModule(idDansTemplate, idDansActif : int, vientDeTemplate : bool)
++ recevoirSuprimerModule(idDansTemplate, idDansActif : int)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>335</x>
-      <y>140</y>
+      <x>295</x>
+      <y>120</y>
       <w>230</w>
       <h>230</h>
     </coordinates>
@@ -73,22 +76,22 @@ EGNA
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>180</y>
-      <w>110</w>
+      <x>520</x>
+      <y>160</y>
+      <w>85</w>
       <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 - editeur : EGNA
 m1=1..1
 m2=0..1</panel_attributes>
-    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>85</x>
-      <y>175</y>
+      <x>55</x>
+      <y>155</y>
       <w>185</w>
       <h>170</h>
     </coordinates>
@@ -120,8 +123,8 @@ GNA
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>480</x>
-      <y>85</y>
+      <x>440</x>
+      <y>65</y>
       <w>70</w>
       <h>35</h>
     </coordinates>
@@ -134,8 +137,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>80</x>
-      <y>105</y>
+      <x>50</x>
+      <y>85</y>
       <w>75</w>
       <h>30</h>
     </coordinates>
@@ -148,20 +151,20 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>265</x>
-      <y>255</y>
-      <w>80</w>
+      <x>235</x>
+      <y>235</y>
+      <w>70</w>
       <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 Créé la Classe</panel_attributes>
-    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;120.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>110</x>
-      <y>130</y>
+      <x>80</x>
+      <y>110</y>
       <w>15</w>
       <h>55</h>
     </coordinates>
@@ -171,8 +174,8 @@ Créé la Classe</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>180</x>
-      <y>95</y>
+      <x>150</x>
+      <y>75</y>
       <w>75</w>
       <h>50</h>
     </coordinates>
@@ -187,8 +190,8 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>210</x>
-      <y>140</y>
+      <x>180</x>
+      <y>120</y>
       <w>15</w>
       <h>45</h>
     </coordinates>
@@ -198,8 +201,8 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>510</x>
-      <y>115</y>
+      <x>470</x>
+      <y>95</y>
       <w>15</w>
       <h>35</h>
     </coordinates>
@@ -209,8 +212,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>715</x>
-      <y>325</y>
+      <x>695</x>
+      <y>305</y>
       <w>200</w>
       <h>80</h>
     </coordinates>
@@ -230,8 +233,8 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>745</x>
-      <y>275</y>
+      <x>725</x>
+      <y>255</y>
       <w>160</w>
       <h>60</h>
     </coordinates>
@@ -245,46 +248,22 @@ m2=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>325</y>
-      <w>165</w>
+      <x>520</x>
+      <y>305</y>
+      <w>185</w>
       <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 - modules : QVector&lt;Module*&gt; *
 m1=1..1
 m2=0..1</panel_attributes>
-    <additional_attributes>10.0;20.0;310.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>905</x>
-      <y>135</y>
-      <w>90</w>
-      <h>25</h>
-    </coordinates>
-    <panel_attributes>+ afficherStats utilise
-nbTirages = resolution²
-bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>725</x>
-      <y>155</y>
-      <w>190</w>
-      <h>15</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>360.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>575</x>
-      <y>250</y>
+      <x>530</x>
+      <y>230</y>
       <w>55</w>
       <h>15</h>
     </coordinates>
@@ -296,32 +275,32 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>625</x>
-      <y>245</y>
-      <w>45</w>
+      <x>580</x>
+      <y>225</y>
+      <w>25</w>
       <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 </panel_attributes>
-    <additional_attributes>70.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>30.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>260</y>
-      <w>145</w>
+      <x>555</x>
+      <y>240</y>
+      <w>170</w>
       <h>75</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 </panel_attributes>
-    <additional_attributes>270.0;130.0;270.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>320.0;130.0;320.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>380</x>
-      <y>90</y>
+      <x>340</x>
+      <y>70</y>
       <w>90</w>
       <h>45</h>
     </coordinates>
@@ -336,8 +315,8 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>425</x>
-      <y>130</y>
+      <x>385</x>
+      <y>110</y>
       <w>15</w>
       <h>20</h>
     </coordinates>
@@ -347,8 +326,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>70</x>
-      <y>455</y>
+      <x>50</x>
+      <y>435</y>
       <w>225</w>
       <h>105</h>
     </coordinates>
@@ -370,8 +349,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>550</x>
-      <y>620</y>
+      <x>530</x>
+      <y>600</y>
       <w>225</w>
       <h>110</h>
     </coordinates>
@@ -393,8 +372,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>315</x>
-      <y>455</y>
+      <x>295</x>
+      <y>435</y>
       <w>200</w>
       <h>135</h>
     </coordinates>
@@ -420,8 +399,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>840</x>
-      <y>620</y>
+      <x>820</x>
+      <y>600</y>
       <w>255</w>
       <h>145</h>
     </coordinates>
@@ -448,8 +427,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>330</x>
-      <y>615</y>
+      <x>310</x>
+      <y>595</y>
       <w>185</w>
       <h>120</h>
     </coordinates>
@@ -473,8 +452,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>840</x>
-      <y>455</y>
+      <x>820</x>
+      <y>435</y>
       <w>200</w>
       <h>145</h>
     </coordinates>
@@ -500,8 +479,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>550</x>
-      <y>460</y>
+      <x>530</x>
+      <y>440</y>
       <w>225</w>
       <h>110</h>
     </coordinates>
@@ -523,8 +502,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1120</x>
-      <y>650</y>
+      <x>1100</x>
+      <y>630</y>
       <w>125</w>
       <h>30</h>
     </coordinates>
@@ -537,8 +516,8 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1090</x>
-      <y>655</y>
+      <x>1070</x>
+      <y>635</y>
       <w>40</w>
       <h>15</h>
     </coordinates>
@@ -548,8 +527,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>120</x>
-      <y>645</y>
+      <x>100</x>
+      <y>625</y>
       <w>115</w>
       <h>30</h>
     </coordinates>
@@ -562,8 +541,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>895</x>
-      <y>400</y>
+      <x>875</x>
+      <y>380</y>
       <w>15</w>
       <h>65</h>
     </coordinates>
@@ -573,8 +552,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>825</x>
-      <y>400</y>
+      <x>805</x>
+      <y>380</y>
       <w>25</w>
       <h>240</h>
     </coordinates>
@@ -584,8 +563,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>770</x>
-      <y>400</y>
+      <x>750</x>
+      <y>380</y>
       <w>40</w>
       <h>240</h>
     </coordinates>
@@ -595,8 +574,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>505</x>
-      <y>400</y>
+      <x>485</x>
+      <y>380</y>
       <w>230</w>
       <h>270</h>
     </coordinates>
@@ -606,8 +585,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>765</x>
-      <y>400</y>
+      <x>745</x>
+      <y>380</y>
       <w>15</w>
       <h>70</h>
     </coordinates>
@@ -617,8 +596,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>470</x>
-      <y>400</y>
+      <x>450</x>
+      <y>380</y>
       <w>255</w>
       <h>65</h>
     </coordinates>
@@ -628,8 +607,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>265</x>
-      <y>385</y>
+      <x>245</x>
+      <y>365</y>
       <w>460</w>
       <h>80</h>
     </coordinates>
@@ -639,8 +618,8 @@ bg=red</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>990</x>
-      <y>165</y>
+      <x>970</x>
+      <y>145</y>
       <w>55</w>
       <h>25</h>
     </coordinates>
@@ -652,8 +631,8 @@ InfoProjet
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>990</x>
-      <y>235</y>
+      <x>970</x>
+      <y>215</y>
       <w>55</w>
       <h>25</h>
     </coordinates>
@@ -665,8 +644,8 @@ AideModules
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>990</x>
-      <y>200</y>
+      <x>970</x>
+      <y>180</y>
       <w>55</w>
       <h>25</h>
     </coordinates>
@@ -678,50 +657,50 @@ AideTests
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>885</x>
-      <y>235</y>
-      <w>115</w>
+      <x>875</x>
+      <y>215</y>
+      <w>105</w>
       <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 - fenetre : AideModules
 m1=1..1
 m2=0..1</panel_attributes>
-    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>885</x>
-      <y>205</y>
-      <w>115</w>
+      <x>875</x>
+      <y>185</y>
+      <w>105</w>
       <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 - fenetre : AideTests
 m1=1..1
 m2=0..1</panel_attributes>
-    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>885</x>
-      <y>170</y>
-      <w>115</w>
+      <x>875</x>
+      <y>150</y>
+      <w>105</w>
       <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 - fenetre : InfoProjet
 m1=1..1
 m2=0..1</panel_attributes>
-    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>925</x>
-      <y>295</y>
+      <x>905</x>
+      <y>275</y>
       <w>190</w>
       <h>75</h>
     </coordinates>
@@ -739,50 +718,56 @@ DemandeNomClasse
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>885</x>
-      <y>265</y>
-      <w>155</w>
+      <x>875</x>
+      <y>245</y>
+      <w>145</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 - fenetre : AideModules
 m1=1..1
 m2=0..1</panel_attributes>
-    <additional_attributes>10.0;20.0;260.0;20.0;260.0;60.0</additional_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0;240.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1055</x>
-      <y>120</y>
-      <w>160</w>
-      <h>45</h>
+      <x>1040</x>
+      <y>75</y>
+      <w>290</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;ui&gt;&gt;
+    <panel_attributes>&lt;&lt;classe promue&gt;&gt;
 ListeModulesActifs
 --
 + ListeModulesActifs(parent : QWidget*)
-# dropEvent(event QDropEvent*)</panel_attributes>
+# dropEvent(event QDropEvent*)
+# startDrag(action : Qt::DropActions)
+# dragEnterEvent(event : QDragEnterEvent*)
+# dragMoveEvent(event : QDragMoveEvent*)
+
+&lt;&lt;signals&gt;&gt;
++ envoyerIdModule(idDansTemplate, idDansActif : int, vientDeTemplate : bool)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>885</x>
-      <y>120</y>
-      <w>180</w>
+      <x>875</x>
+      <y>100</y>
+      <w>175</w>
       <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;..
 via l'objet ui de type Ui
 </panel_attributes>
-    <additional_attributes>10.0;20.0;340.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1105</x>
-      <y>215</y>
+      <x>1165</x>
+      <y>310</y>
       <w>55</w>
       <h>15</h>
     </coordinates>
@@ -793,12 +778,57 @@ via l'objet ui de type Ui
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1130</x>
+      <x>1215</x>
       <y>160</y>
+      <w>105</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;320.0;190.0;320.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1065</x>
+      <y>170</y>
+      <w>230</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;classe promue&gt;&gt;
+ListeModulesTemplate
+--
++ ListeModulesActifs(parent : QWidget*)
+# startDrag(action : Qt::DropActions)
+# dropEvent(event QDropEvent*)
+# dragEnterEvent(event : QDragEnterEvent*)
+# dragMoveEvent(event : QDragMoveEvent*)
+
+&lt;&lt;signals&gt;&gt;
++ envoyerSuprimerModule(idDansTemplate, idDansActif : int)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1185</x>
+      <y>255</y>
       <w>15</w>
       <h>65</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>875</x>
+      <y>120</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..
+via l'objet ui de type Ui
+</panel_attributes>
+    <additional_attributes>10.0;20.0;310.0;20.0;310.0;120.0;380.0;120.0</additional_attributes>
   </element>
 </diagram>
