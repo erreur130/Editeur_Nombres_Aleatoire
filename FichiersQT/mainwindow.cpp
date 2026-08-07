@@ -12,6 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     , modulesActif(new QVector<Module*>), modulesParDefaut(QVector<Module*>()), editeur(EGNA(modulesActif)), ui(new Ui::MainWindow){
     ui->setupUi(this);
 
+    //connect ListeModulesActifs -> MainWindow
+    connect(ui->listeModulesActifs, &ListeModulesActifs::envoyerIdModule, this, &MainWindow::recevoirIdModule);
+    //connect ListeModulesTemplate -> MainWindow
+    connect(ui->listeModulesTemplate, &ListeModulesTemplate::envoyerSuprimerModule, this, &MainWindow::recevoirSuprimerModule);
+
     // Initialiser l'image avec 1px blanc
     QImage image(1, 1, QImage::Format_Indexed8);
     QVector<QRgb> colorTable(255);
@@ -49,8 +54,8 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     });
 }
 
-void MainWindow::afficherStats(bool vider) const {
-    if (vider){ // affichage par défaut
+void MainWindow::afficherStats() const {
+    if (modulesActif->size() > 0){ // affichage par défaut
         ui->labelAquilibreBits->setText("---");
         ui->labelMoyenne->setText("---");
         ui->labelCV->setText("---");
@@ -67,31 +72,21 @@ void MainWindow::afficherStats(bool vider) const {
 
 void MainWindow::afficherListeModules() const {
     ui->listeModulesTemplate->clear();
-    for (Module* module : modulesParDefaut){
-        QWidget *widget = module->creerPaneauParametres(); // on créé le widget (le new est dans la fonction)
+    for (qsizetype indice = 0; indice < modulesParDefaut.size(); indice++){
+        QWidget *widget = modulesParDefaut[indice]->creerPaneauParametres(); // on créé le widget (le new est dans la fonction)
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
 
         ui->listeModulesTemplate->addItem(item); // on met la taille
         ui->listeModulesTemplate->setItemWidget(item, widget); // on met le widget
-
-        // Rajout du séparateur
-        QListWidgetItem* separateur = new QListWidgetItem();
-        separateur->setFlags(Qt::NoItemFlags); // non sélectionnable, non cliquable
-        separateur->setSizeHint(QSize(0,1)); // hauteur réservée pour la ligne, largeur auto
-        QFrame* ligne = new QFrame();
-        ligne->setFrameShape(QFrame::HLine);
-        ligne->setFrameShadow(QFrame::Sunken);
-        ui->listeModulesTemplate->addItem(separateur); // on met la taille
-        ui->listeModulesTemplate->setItemWidget(separateur, ligne); // on met le séparateur
     }
 }
 
 void MainWindow::miseAJourMethodesActives() const {
     ui->listeModulesActifs->clear();
-    for (Module* module : modulesParDefaut){
-        QWidget *widget = new QWidget(module->creerPaneauParametres()); // on créé le widget
+    for (Module* module : *modulesActif){
+        QWidget *widget = module->creerPaneauParametres(); // on créé le widget
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setSizeHint(widget->sizeHint()); // On définit la taille qu'il prendra dans la liste
@@ -101,27 +96,43 @@ void MainWindow::miseAJourMethodesActives() const {
     }
 }
 
+void MainWindow::miseAJourTout(){
+    editeur.renitialiserEtat();
+    afficherBruit();
+    afficherStats();
+}
+
 void MainWindow::afficherBruit(){
     ui->imageBruit->clear();
 
-    int resolution = ui->spinBoxResolution->value();
-    QImage image(resolution, resolution, QImage::Format_Indexed8);
+    if (modulesActif->size()){
+        int resolution = ui->spinBoxResolution->value();
+        QImage image(resolution, resolution, QImage::Format_Indexed8);
 
-    // Initialiser la palette
-    QVector<QRgb> colorTable(256);
-    for (int i = 0; i < 256; ++i) colorTable[i] = qRgb(i, i, i);
-    image.setColorTable(colorTable);
+        // Initialiser la palette
+        QVector<QRgb> colorTable(256);
+        for (int i = 0; i < 256; ++i) colorTable[i] = qRgb(i, i, i);
+        image.setColorTable(colorTable);
 
-    // création de l'image
-    for (int y = 0; y < resolution; ++y) {
-        for (int x = 0; x < resolution; ++x) {
-            unsigned char gris = editeur.suivantPixelBruit(); // nouvelle couleur généré
-            image.setPixel(x, y, gris);
+        // création de l'image
+        for (int y = 0; y < resolution; ++y) {
+            for (int x = 0; x < resolution; ++x) {
+                unsigned char gris = editeur.suivantPixelBruit(); // nouvelle couleur généré
+                image.setPixel(x, y, gris);
+            }
         }
-    }
 
-    // Affichage de l'image dans le label
-    ui->imageBruit->setPixmap(QPixmap::fromImage(image));
+        // Affichage de l'image dans le label
+        ui->imageBruit->setPixmap(QPixmap::fromImage(image));
+
+    } else { // Sinon on met 1px blanc
+        QImage image(1, 1, QImage::Format_Indexed8);
+        QVector<QRgb> colorTable(255);
+        colorTable[0] = qRgb(255, 255, 255);
+        image.fill(0);
+        image.setColorTable(colorTable);
+        ui->imageBruit->setPixmap(QPixmap::fromImage(image));
+    }
 }
 
 void MainWindow::on_actionModules_triggered(){
@@ -174,32 +185,18 @@ void MainWindow::on_actionCharger_triggered(){
         editeur.charger(nomFichier);
 
         // update
-        if (modulesActif->size() > 0){ // Si nésésaire
-            miseAJourMethodesActives();
-            afficherBruit();
-            afficherStats(true);
-        } else {
-            afficherStats();
-        }
+        miseAJourMethodesActives();
+        afficherBruit();
+        afficherStats();
     }
 }
 
 void MainWindow::on_spinBoxResolution_valueChanged(int val){
     ui->labelNbValeurs->setText(QString::number(ui->spinBoxResolution->value() * ui->spinBoxResolution->value()));
     // update
-    if (modulesActif->size() > 0){ // Si nésésaire
-        editeur.changerNbValeursTotale(val);
-        editeur.renitialiserEtat();
-        afficherBruit();
-        afficherStats(true);
-    } else {
-        afficherStats();
-    }
-}
+    editeur.changerNbValeursTotale(val*val);
+    miseAJourTout();
 
-void MainWindow::recevoirNomClasse(QString nomClasse){
-    if(nomClasse != "")
-        editeur.sauvegarder(nomClasse);
 }
 
 void MainWindow::on_textGraine_editingFinished(){
@@ -209,16 +206,38 @@ void MainWindow::on_textGraine_editingFinished(){
     if (ok){
         qDebug() << "Graine changer";
         editeur.changerGraine(valeur);
-
         // update
-        if (modulesActif->size() > 0){ // Si nésésaire
-            editeur.renitialiserEtat();
-            afficherBruit();
-            afficherStats(true);
-        } else {
-            afficherStats();
-        }
+        miseAJourTout();
+
     } else
         qDebug() << "Graine non changer";
 }
 
+//------------------------------------- public slots -------------------------------------------------
+
+void MainWindow::recevoirNomClasse(QString nomClasse){
+    if(nomClasse != "")
+        editeur.sauvegarder(nomClasse);
+}
+
+void MainWindow::recevoirIdModule(int idOrigine, int idCible, bool vientDeTemplate){
+    if (vientDeTemplate)
+        modulesActif->insert(idCible, modulesParDefaut[idOrigine]->copie()); // copie() fait un new
+    else { // vient des modules actifs
+        Module* tmp = (*modulesActif)[idOrigine]; // On sauvegarde pour pas perdre le pointeur
+        modulesActif->removeAt(idOrigine); // On suprime ce qu'on vient de déplacer
+        modulesActif->insert(idCible + ((idCible > idOrigine)?-1:0), tmp); // déplace le pointeur / si idCible > idOrigine alors il y auras un décalage de trop car remouveAT avant donc -1
+    }
+    // update
+    miseAJourMethodesActives();
+    miseAJourTout();
+}
+
+void MainWindow::recevoirSuprimerModule(int idOrigine, bool vientDeTemplate){
+    if (not(vientDeTemplate)){ // si Actifs -> Template, alors on suprime l'élément
+        modulesActif->removeAt(idOrigine); // On suprime ce qu'on vient de déplacer
+        // update
+        miseAJourMethodesActives();
+        miseAJourTout();
+    }
+}

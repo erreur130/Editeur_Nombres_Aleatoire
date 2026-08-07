@@ -18,9 +18,10 @@ class MainWindow : public QMainWindow{
     QVector<Module*> modulesParDefaut;
     EGNA editeur;
 
-    void afficherStats(bool vider = true) const;
+    void afficherStats() const;
     void afficherListeModules() const;
     void miseAJourMethodesActives() const;
+
     void afficherBruit();
 
 public:
@@ -37,7 +38,10 @@ private slots:
     void on_textGraine_editingFinished();
 
 public slots:
+    void miseAJourTout();
     void recevoirNomClasse(QString);
+    void recevoirIdModule(int idOrigine, int idCible, bool vientDeTemplate);
+    void recevoirSuprimerModule(int idOrigine, bool vientDeTemplate);
 
 private:
     Ui::MainWindow *ui;

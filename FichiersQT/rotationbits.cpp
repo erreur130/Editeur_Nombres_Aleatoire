@@ -1,4 +1,5 @@
 #include "rotationbits.h"
+#include "mainwindow.h" // dans le cpp pour évité la récusivité
 
 RotationBits::RotationBits(QObject* parent, uint8_t decalage_)
     : Module(parent), decalage(decalage_){
@@ -37,7 +38,10 @@ QWidget* RotationBits::creerPaneauParametres(){
     nbDecalage->setMinimum(1);
     nbDecalage->setMaximum(63);
     nbDecalage->setValue(decalage);
+    // connect spinBox -> Module
     connect(nbDecalage, QOverload<int>::of(&QSpinBox::valueChanged), this, &RotationBits::changerDecalage);
+    // connect spinBox -> MainWindow
+    connect(nbDecalage, QOverload<int>::of(&QSpinBox::valueChanged), qobject_cast<MainWindow*>(parent()), &MainWindow::miseAJourTout);
 
     // on répartie les Wiget dans les layouts
     layoutParametre->addRow("Décalage :", nbDecalage);

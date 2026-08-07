@@ -10,6 +10,7 @@ SOURCES += \
     demandenomclasse.cpp \
     egna.cpp \
     listemodulesactifs.cpp \
+    listemodulestemplate.cpp \
     main.cpp \
     mainwindow.cpp \
     module.cpp \
@@ -19,6 +20,7 @@ HEADERS += \
     demandenomclasse.h \
     egna.h \
     listemodulesactifs.h \
+    listemodulestemplate.h \
     mainwindow.h \
     module.h \
     rotationbits.h

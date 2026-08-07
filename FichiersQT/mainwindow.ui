@@ -39,15 +39,21 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="listeModulesTemplate">
+         <widget class="ListeModulesTemplate" name="listeModulesTemplate">
+          <property name="acceptDrops">
+           <bool>true</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <property name="dragEnabled">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="dragDropMode">
-           <enum>QAbstractItemView::DragDropMode::DragOnly</enum>
+           <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::DropAction::CopyAction</enum>
           </property>
           <property name="supportedDragActions">
            <set>Qt::DropAction::CopyAction|Qt::DropAction::MoveAction</set>
@@ -203,10 +209,10 @@
            </sizepolicy>
           </property>
           <property name="minimum">
-           <number>256</number>
+           <number>16</number>
           </property>
           <property name="maximum">
-           <number>8192</number>
+           <number>1024</number>
           </property>
          </widget>
         </item>
@@ -821,6 +827,11 @@
    <class>ListeModulesActifs</class>
    <extends>QListWidget</extends>
    <header>listemodulesactifs.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ListeModulesTemplate</class>
+   <extends>QListWidget</extends>
+   <header>listemodulestemplate.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
