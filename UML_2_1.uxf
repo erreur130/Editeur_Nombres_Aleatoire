@@ -26,7 +26,7 @@
 - on_actionInfo_Projet_triggered()
 - on_actionSauvegarder_sous_triggered()
 - on_actionCharger_triggered()
-- on_spinBox_valueChanged(arg1 : int)
+- on_spinBoxResolution_editingFinished()
 - on_textGraine_editingFinished()
 
 + recevoirNomClasse(nomClasse : QString)
@@ -67,7 +67,6 @@ EGNA
 + avoirEquilibreBits() : double
 
 - calculeMoyenne()
-- calculeCV()
 - calculeUniformite()
 - calculeAutocorrelation()
 - calculeEquilibreBits()</panel_attributes>
@@ -342,7 +341,7 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerDecalage(decalage_ : uint8_t)
++ changerDecalage()
 + avoirDecalage() : uint8_t</panel_attributes>
     <additional_attributes/>
   </element>
@@ -365,7 +364,7 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerConstante(constante_ : uint64_t)
++ changerConstante()
 + avoirConstante() : uint64_t</panel_attributes>
     <additional_attributes/>
   </element>
@@ -388,9 +387,9 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerA(a_ : unsigned char)
-+ changerB(b_ : unsigned char)
-+ changerC(c_ : unsigned char)
++ changerA()
++ changerB()
++ changerC()
 + avoirA() : unsigned char
 + avoirB() : unsigned char
 + avoirC() : unsigned char</panel_attributes>
@@ -416,9 +415,9 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerMult(mult_ : uint64_t)
-+ changerIncr(incr_ : uint64_t)
-+ changerMod(mod_ : uint64_t)
++ changerMult()
++ changerIncr()
++ changerMod()
 + avoirMult() : uint64_t
 + avoirIncr() : uint64_t
 + avoirMod() : uint64_t</panel_attributes>
@@ -443,8 +442,8 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerA(a_ : uint64_t)
-+ changerB(b_ : uint64_t)
++ changerA()
++ changerB()
 + avoirA() : uint64_t
 + avoirB() : uint64_t</panel_attributes>
     <additional_attributes/>
@@ -468,9 +467,9 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerMult(mult_ : uint64_t)
-+ changerIncr(incr_ : uint64_t)
-+ changerMod(mod_ : uint64_t)
++ changerMult()
++ changerIncr()
++ changerMod()
 + avoirMult() : uint64_t
 + avoirIncr() : uint64_t
 + avoirMod() : uint64_t</panel_attributes>
@@ -495,7 +494,7 @@ bg=blue</panel_attributes>
 /+ creerPanneauParametres() : QWidget*/
 /+ sauvegarder(fichier : QFile)/
 /+ avoirNom() : QString/
-+ changerConstante(constante_ : uint64_t)
++ changerConstante()
 + avoirConstante() : uint64_t</panel_attributes>
     <additional_attributes/>
   </element>
