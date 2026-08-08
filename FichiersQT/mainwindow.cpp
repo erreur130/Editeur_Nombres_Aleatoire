@@ -28,10 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
     // On limite les valeurs possible à mettre dans le QLineEdite pour la graine (hexadécimale)
     ui->textGraine->setValidator(new QRegularExpressionValidator(QRegularExpression("^0x[0-9A-Fa-f]{1,16}$"), ui->textGraine));
     // On met la graine en visuel
-    ui->textGraine->setText("0x" + QString::number(editeur.avoirGraine(), 16));
+    ui->textGraine->setText("0x" + QString::number(editeur.avoirGraine(), 16)); // hexadécimale
 
-    // On met le nb valeur en visuel (par défaut c'est 256*256)
+    // On met le nb valeur en visuel (par défaut c'est 16*16)
     ui->labelNbValeurs->setText(QString::number(ui->spinBoxResolution->value() * ui->spinBoxResolution->value()));
+    // On change directement le NbValeursTotale pour qu'il soit racore avec le spinbox actuel
+    editeur.changerNbValeursTotale(ui->spinBoxResolution->value() * ui->spinBoxResolution->value());
 
     // On remplie la liste des templates
     modulesParDefaut.push_back(new RotationBits(this, 5));
@@ -55,18 +57,18 @@ void MainWindow::resizeEvent(QResizeEvent *event){
 }
 
 void MainWindow::afficherStats() const {
-    if (modulesActif->size() > 0){ // affichage par défaut
+    if (modulesActif->size() == 0){ // affichage par défaut
         ui->labelAquilibreBits->setText("---");
         ui->labelMoyenne->setText("---");
         ui->labelCV->setText("---");
         ui->labelUniformite->setText("---");
         ui->labelCorrelation->setText("---");
     } else {
-        ui->labelAquilibreBits->setText(QString::number(editeur.avoirEquilibreBits()*100));
-        ui->labelMoyenne->setText(QString::number(editeur.avoirMoyenne()*100));
-        ui->labelCV->setText(QString::number(editeur.avoirCV()*100));
-        ui->labelUniformite->setText(QString::number(editeur.avoirUniformite()*100));
-        ui->labelCorrelation->setText(QString::number(editeur.avoirAutocorrelation()*100));
+        ui->labelAquilibreBits->setText(QString::number(editeur.avoirEquilibreBits()*100.0));
+        ui->labelMoyenne->setText(QString::number(editeur.avoirMoyenne()*100.0));
+        ui->labelCV->setText(QString::number(editeur.avoirCV()*100.0));
+        ui->labelUniformite->setText(QString::number(editeur.avoirUniformite()*100.0));
+        ui->labelCorrelation->setText(QString::number(editeur.avoirAutocorrelation()*100.0));
     }
 }
 
@@ -191,12 +193,12 @@ void MainWindow::on_actionCharger_triggered(){
     }
 }
 
-void MainWindow::on_spinBoxResolution_valueChanged(int val){
-    ui->labelNbValeurs->setText(QString::number(ui->spinBoxResolution->value() * ui->spinBoxResolution->value()));
+void MainWindow::on_spinBoxResolution_editingFinished(){
+    int val = ui->spinBoxResolution->value() * ui->spinBoxResolution->value();
+    ui->labelNbValeurs->setText(QString::number(val));
     // update
-    editeur.changerNbValeursTotale(val*val);
+    editeur.changerNbValeursTotale(val);
     miseAJourTout();
-
 }
 
 void MainWindow::on_textGraine_editingFinished(){

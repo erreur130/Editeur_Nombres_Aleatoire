@@ -1,7 +1,7 @@
 #include "egna.h"
 
 EGNA::EGNA(QVector<Module*> *modules_)
-    : graine(uint64_t()), etat{uint64_t()}, modules(modules_), moyenne(0), cv(0), uniformite(0), autoCorrelation(0), equilibleBits(0), nbValeursActuel(0), nbValeursTotale(256*256){
+    : graine(uint64_t()), etat{uint64_t()}, modules(modules_), moyenne(0.0), M2(0.0), cv(0.0), uniformite(0.0), autoCorrelation(0.0), equilibleBits(0.0), nbValeursActuel(0.0), nbValeursTotale(0){
 
     using namespace std::chrono;
     time_point<system_clock> now = system_clock::now();
@@ -44,6 +44,7 @@ bool EGNA::sauvegarder(QString nomFichier) const {
 
 void EGNA::renitialiserEtat(){
     nbValeursActuel = 0; // renitialise le compteur
+    M2 = 0.0; // renitialise la valeur pour le calcule de CV
     // cas vide
     if (modules->size() == 0){
         etat[0] = etat[1] = 255;
@@ -67,7 +68,6 @@ uint8_t EGNA::suivantPixelBruit(){
     // calcule des stats sur l'état
     nbValeursActuel++; // fait commencé à 1
     calculeMoyenne();
-    calculeCV();
     calculeUniformite();
     calculeEquilibreBits();
 
@@ -80,20 +80,28 @@ void EGNA::calculeMoyenne(){
         // prend les 53 bits de poids fort de etat[0] et les divise par 2^53
         moyenne = static_cast<double>(etat[0] >> 11) / (1ULL << 53);
     } else {
+        double valeur = static_cast<double>(etat[0] >> 11) / (1ULL << 53); // pour évité la redondance / des calcules inutiles
+
+        // calcule pour CV
+        double delta1 = valeur - moyenne;
+
         // moyene = ( (MoyTotal*nbValsTotalAvant) + (1autreMoy*1) ) / (nbVals)
-        moyenne = ( (moyenne*(nbValeursActuel-1)) + static_cast<double>(etat[0] >> 11) / (1ULL << 53) ) / nbValeursActuel;
+        moyenne = ( (moyenne*(nbValeursActuel-1)) + valeur ) / nbValeursActuel;
+
+        // calcule pour CV
+        double delta2 = valeur - moyenne; // Nouvelle différence avec la moyenne mise à jour
+        M2 += delta1 * delta2;
     }
 }
 
-void EGNA::calculeCV(){
-    if (moyenne != 0){
-        /* // à aprofondire
-        double variance = m2 / nbValeursActuel; // variance
-        double ecartType = std::sqrt(variance);
-        cv = ecartType / moyenne;   // coefficient de variation
-        */
+double EGNA::avoirCV() const { // ne s'exécute que à la fin
+    if (moyenne != 0.0){
+        // variance -> algo de Welford
+        double variance = M2 / nbValeursActuel;
+        return std::sqrt(variance) / moyenne;
     } else
         qDebug() << "moyenne == 0 !";
+    return 0.0;
 }
 
 void EGNA::calculeUniformite(){

@@ -212,7 +212,7 @@
            <number>16</number>
           </property>
           <property name="maximum">
-           <number>1024</number>
+           <number>512</number>
           </property>
          </widget>
         </item>
@@ -738,7 +738,7 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>175</width>
+              <width>200</width>
               <height>5</height>
              </size>
             </property>

@@ -34,8 +34,8 @@ private slots:
     void on_actionSauvegarder_sous_triggered();
     void on_actionCharger_triggered();
     void on_actionInfo_Projet_triggered();
-    void on_spinBoxResolution_valueChanged(int arg1);
     void on_textGraine_editingFinished();
+    void on_spinBoxResolution_editingFinished();
 
 public slots:
     void miseAJourTout();

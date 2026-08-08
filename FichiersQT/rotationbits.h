@@ -15,8 +15,10 @@ public:
     void sauvegarder(QFile &) const;
     QString avoirNom() const;
 
-    inline void changerDecalage(uint8_t decalage_){decalage = decalage_;};
     inline uint8_t avoirDecalage() const {return decalage;};
+
+public slots :
+    void changerDecalage();
 };
 
 #endif // ROTATIONBITS_H

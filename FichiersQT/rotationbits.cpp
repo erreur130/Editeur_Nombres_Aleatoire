@@ -39,9 +39,9 @@ QWidget* RotationBits::creerPaneauParametres(){
     nbDecalage->setMaximum(63);
     nbDecalage->setValue(decalage);
     // connect spinBox -> Module
-    connect(nbDecalage, QOverload<int>::of(&QSpinBox::valueChanged), this, &RotationBits::changerDecalage);
+    connect(nbDecalage, &QSpinBox::editingFinished, this, &RotationBits::changerDecalage);
     // connect spinBox -> MainWindow
-    connect(nbDecalage, QOverload<int>::of(&QSpinBox::valueChanged), qobject_cast<MainWindow*>(parent()), &MainWindow::miseAJourTout);
+    connect(nbDecalage, &QSpinBox::editingFinished, qobject_cast<MainWindow*>(parent()), &MainWindow::miseAJourTout);
 
     // on répartie les Wiget dans les layouts
     layoutParametre->addRow("Décalage :", nbDecalage);
@@ -69,5 +69,12 @@ void RotationBits::sauvegarder(QFile & fichier) const{
 
 QString RotationBits::avoirNom() const {
     return QString("RotationBits");
+}
+
+void RotationBits::changerDecalage(){
+    QSpinBox* spin = qobject_cast<QSpinBox*>(sender());
+    if (spin) {
+        decalage = static_cast<uint8_t>(spin->value());
+    }
 }
 

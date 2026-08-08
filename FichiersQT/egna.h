@@ -9,6 +9,7 @@ class EGNA{
     uint64_t etat[2];
     QVector<Module*> *modules;
     double moyenne;
+    double M2; // somme des carrés des écarts (pour le calcule de CV)
     double cv;
     double uniformite;
     double autoCorrelation;
@@ -29,14 +30,13 @@ public:
 
     uint8_t suivantPixelBruit();
     inline double avoirMoyenne() const {return moyenne;};
-    inline double avoirCV() const {return cv;};
+    double avoirCV() const;
     inline double avoirUniformite() const {return uniformite;};
     inline double avoirAutocorrelation() const {return autoCorrelation;};
     inline double avoirEquilibreBits() const {return equilibleBits;};
 
 private :
     void calculeMoyenne();
-    void calculeCV();
     void calculeUniformite();
     void calculeAutocorrelation();
     void calculeEquilibreBits();
